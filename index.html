@@ -3,31 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    
-    <!-- Tailwind CSS -->
+    <title>SAFEPASS - Login</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Custom Styles -->
-    <link rel="stylesheet" href="/src/css/styles.css">
+    <link rel="stylesheet" href="./src/css/styles.css">
 </head>
 <body class="min-h-screen transition-colors duration-300">
-    <!-- Theme Toggle Button -->
-    <button id="themeToggle" class="fixed top-6 right-6 z-50 p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 transition-all duration-300 group">
+
+    <!-- Theme Toggle -->
+    <button id="themeToggle" class="fixed top-6 right-6 z-50 p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 transition-all duration-300">
         <svg class="w-6 h-6 theme-icon-sun hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
         </svg>
         <svg class="w-6 h-6 theme-icon-moon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
         </svg>
     </button>
 
-    <!-- Background Decorative Elements -->
+    <!-- Background -->
     <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
         <div class="absolute top-0 -left-40 w-80 h-80 bg-gradient-radial opacity-30 blur-3xl"></div>
         <div class="absolute bottom-0 -right-40 w-96 h-96 bg-gradient-radial-secondary opacity-20 blur-3xl"></div>
@@ -38,71 +33,56 @@
 
     <div class="flex items-center justify-center min-h-screen px-4 py-12">
         <div class="w-full max-w-md">
-            <!-- Logo and Header -->
+
+            <!-- Header -->
             <div class="text-center mb-8 animate-fade-in-up">
                 <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-primary to-secondary mb-4 shadow-lg shadow-primary/30 animate-float">
                     <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
                     </svg>
                 </div>
-                <h1 class="text-4xl font-bold font-heading mb-2 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                    SAFEPASS
-                </h1>
+                <h1 class="text-4xl font-bold font-heading mb-2 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">SAFEPASS</h1>
                 <p class="text-muted">Intelligent Attendance Tracking System</p>
             </div>
 
-            <!-- Login Form Card -->
-            <div class="glass-card p-8 rounded-3xl shadow-2xl animate-fade-in-up" style="animation-delay: 0.1s;">
+            <!-- Login Card -->
+            <div class="glass-card p-8 rounded-3xl shadow-2xl animate-fade-in-up" style="animation-delay:0.1s">
                 <h2 class="text-2xl font-bold font-heading mb-6 text-center">Welcome Back</h2>
-                
+
                 <form id="loginForm" class="space-y-6">
-                    <!-- Email Input -->
+                    <!-- Email -->
                     <div class="form-group">
                         <label for="email" class="block text-sm font-medium mb-2">Email Address</label>
                         <div class="relative">
                             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                 <svg class="w-5 h-5 text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"/>
                                 </svg>
                             </div>
-                            <input 
-                                type="email" 
-                                id="email" 
-                                name="email"
-                                required
-                                placeholder="your.email@example.com"
-                                class="input-field pl-12"
-                            >
+                            <input type="email" id="email" name="email" required placeholder="your.email@example.com" class="input-field pl-12">
                         </div>
                     </div>
 
-                    <!-- Password Input -->
+                    <!-- Password -->
                     <div class="form-group">
                         <label for="password" class="block text-sm font-medium mb-2">Password</label>
                         <div class="relative">
                             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                 <svg class="w-5 h-5 text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
                                 </svg>
                             </div>
-                            <input 
-                                type="password" 
-                                id="password" 
-                                name="password"
-                                required
-                                placeholder="••••••••"
-                                class="input-field pl-12 pr-12"
-                            >
+                            <input type="password" id="password" name="password" required placeholder="••••••••" class="input-field pl-12 pr-12">
                             <button type="button" class="absolute inset-y-0 right-0 pr-4 flex items-center" onclick="togglePassword('password')">
                                 <svg class="w-5 h-5 text-muted hover:text-primary transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
                                 </svg>
                             </button>
                         </div>
                     </div>
 
-                    <!-- Remember Me & Forgot Password -->
+                    <!-- Remember / Forgot -->
                     <div class="flex items-center justify-between text-sm">
                         <label class="flex items-center cursor-pointer group">
                             <input type="checkbox" class="w-4 h-4 rounded border-2 border-border checked:bg-primary checked:border-primary focus:ring-2 focus:ring-primary/20 transition-all">
@@ -111,96 +91,34 @@
                         <a href="#" class="text-primary hover:text-secondary transition-colors font-medium">Forgot password?</a>
                     </div>
 
-                    <!-- Submit Button -->
+                    <!-- Submit -->
                     <button type="submit" class="btn-primary w-full group">
-                        <span>Sign In</span>
+                        <span>Login</span>
                         <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
                         </svg>
                     </button>
                 </form>
 
-                <!-- Divider -->
                 <div class="relative my-6">
-                    <div class="absolute inset-0 flex items-center">
-                        <div class="w-full border-t border-border"></div>
-                    </div>
-                    <div class="relative flex justify-center text-sm">
-                        <span class="px-4 bg-card text-muted">or</span>
-                    </div>
+                    <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-border"></div></div>
+                    <div class="relative flex justify-center text-sm"><span class="px-4 bg-card text-muted">or</span></div>
                 </div>
 
-                <!-- Sign Up Link -->
                 <div class="text-center">
-                    <p class="text-muted">
-                        Don't have an account? 
-                        <a href="/src/html/signup.html" class="text-primary hover:text-secondary font-semibold transition-colors">Sign up</a>
+                    <p class="text-muted">Don't have an account?
+                        <a href="./src/html/signup.html" class="text-primary hover:text-secondary font-semibold transition-colors">Sign up</a>
                     </p>
                 </div>
             </div>
 
-            <!-- Footer -->
-            <div class="text-center mt-8 text-sm text-muted animate-fade-in" style="animation-delay: 0.2s;">
+            <div class="text-center mt-8 text-sm text-muted animate-fade-in" style="animation-delay:0.2s">
                 <p>&copy; 2024 SAFEPASS. All rights reserved.</p>
             </div>
         </div>
     </div>
 
-    <!-- Custom Scripts -->
-    <script src="/src/js/script.js"></script>
-    <script>
-        // Login form handler
-        document.getElementById('loginForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            
-            // Call auth login function
-            const result = await Auth.login(email, password);
-            
-            if (result.success) {
-                // Show success message
-                showNotification('Login successful! Redirecting...', 'success');
-                
-                // Redirect to dashboard after short delay
-                setTimeout(() => {
-                    window.location.href = '/src/html/dashboard.html';
-                }, 1000);
-            } else {
-                showNotification(result.message || 'Login failed. Please try again.', 'error');
-            }
-        });
-
-        // Password toggle function
-        function togglePassword(fieldId) {
-            const field = document.getElementById(fieldId);
-            field.type = field.type === 'password' ? 'text' : 'password';
-        }
-
-        // Notification helper
-        function showNotification(message, type = 'info') {
-            const notification = document.createElement('div');
-            notification.className = `notification notification-${type} animate-slide-in-right`;
-            notification.innerHTML = `
-                <div class="flex items-center gap-3">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        ${type === 'success' ? 
-                            '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>' :
-                            '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>'
-                        }
-                    </svg>
-                    <span>${message}</span>
-                </div>
-            `;
-            
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.classList.add('animate-slide-out-right');
-                setTimeout(() => notification.remove(), 300);
-            }, 3000);
-        }
-    </script>
+    <!-- Login module (ES module) -->
+    <script type="module" src="./src/js/login.js"></script>
 </body>
 </html>

@@ -4,83 +4,81 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SAFEPASS - Dashboard</title>
-    
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Custom Styles -->
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body class="min-h-screen transition-colors duration-300">
+
     <!-- Navigation Bar -->
     <nav class="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 h-full flex items-center justify-between">
+
             <!-- Logo -->
             <div class="flex items-center gap-3 flex-shrink-0">
                 <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-lg">
                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
                     </svg>
                 </div>
                 <span class="text-xl font-bold font-heading">SAFEPASS</span>
             </div>
-            
-            <!-- Desktop Navigation Tabs -->
+
+            <!-- Desktop Nav Tabs -->
             <div class="hidden lg:flex items-center gap-3 flex-1 justify-center max-w-2xl mx-8">
                 <div class="nav-tab active" data-tab="home">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
                     </svg>
                     <span class="ml-2">Home</span>
                 </div>
                 <div class="nav-tab" data-tab="campus">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
                     </svg>
                     <span class="ml-2">Campus</span>
                 </div>
                 <div class="nav-tab" data-tab="classroom">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
                     </svg>
                     <span class="ml-2">Classroom</span>
                 </div>
             </div>
-            
-            <!-- Right Side: Theme Toggle, User Menu & Hamburger -->
+
+            <!-- Right Side -->
             <div class="flex items-center gap-3 flex-shrink-0">
+                <!-- Theme Toggle -->
                 <button id="themeToggle" class="p-2 rounded-lg hover:bg-white/10 transition-all">
                     <svg class="w-5 h-5 theme-icon-sun hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
                     </svg>
                     <svg class="w-5 h-5 theme-icon-moon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
                     </svg>
                 </button>
-                
-                <!-- User Dropdown Menu -->
+
+                <!-- User Dropdown (desktop) -->
                 <div class="relative hidden sm:block">
                     <button id="userMenuButton" class="flex items-center gap-2 p-2 rounded-lg hover:bg-white/10 transition-all">
                         <div class="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
-                            <span class="text-white text-sm font-bold" id="userInitials">AD</span>
+                            <span class="text-white text-sm font-bold" id="userInitials">??</span>
                         </div>
-                        <span class="font-medium" id="userName">Admin</span>
+                        <span class="font-medium" id="userName">Loading…</span>
                         <svg class="w-4 h-4 transition-transform" id="userMenuChevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                         </svg>
                     </button>
-                    
+
                     <!-- Dropdown -->
                     <div id="userDropdown" class="hidden absolute right-0 mt-2 w-48 glass-card rounded-xl shadow-xl border border-border overflow-hidden z-50">
                         <div class="py-2">
-                            <button onclick="logout()" class="w-full px-4 py-2.5 text-left hover:bg-white/10 transition-colors flex items-center gap-3 text-red-500">
+                            <!-- ✅ data-action="logout" — wired up in dashboard.js -->
+                            <button data-action="logout" class="w-full px-4 py-2.5 text-left hover:bg-white/10 transition-colors flex items-center gap-3 text-red-500">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
                                 </svg>
                                 <span class="font-medium">Logout</span>
                             </button>
@@ -88,13 +86,13 @@
                     </div>
                 </div>
 
-                <!-- Mobile Hamburger -->
+                <!-- Hamburger (mobile) -->
                 <button id="mobileMenuToggle" class="lg:hidden p-2 rounded-lg hover:bg-white/10 transition-all">
                     <svg class="w-6 h-6" id="hamburgerIcon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                     </svg>
                     <svg class="w-6 h-6 hidden" id="closeIcon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                     </svg>
                 </button>
             </div>
@@ -105,35 +103,37 @@
             <div class="px-4 py-3 space-y-2">
                 <div class="mobile-nav-tab active" data-tab="home">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
                     </svg>
                     <span class="ml-3">Home</span>
                 </div>
                 <div class="mobile-nav-tab" data-tab="campus">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
                     </svg>
                     <span class="ml-3">Campus</span>
                 </div>
                 <div class="mobile-nav-tab" data-tab="classroom">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
                     </svg>
                     <span class="ml-3">Classroom</span>
                 </div>
+
                 <div class="border-t border-border pt-3 mt-3">
                     <div class="flex items-center gap-3 px-3 py-2 mb-3">
                         <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
-                            <span class="text-white text-sm font-bold" id="mobileUserInitials">AD</span>
+                            <span class="text-white text-sm font-bold" id="mobileUserInitials">??</span>
                         </div>
                         <div>
-                            <div class="font-semibold" id="mobileUserName">Admin</div>
+                            <div class="font-semibold" id="mobileUserName">Loading…</div>
                             <div class="text-sm text-muted">Administrator</div>
                         </div>
                     </div>
-                    <button onclick="logout()" class="w-full px-3 py-2.5 rounded-lg text-left hover:bg-white/10 transition-colors flex items-center gap-3 text-red-500">
+                    <!-- ✅ data-action="logout" — wired up in dashboard.js -->
+                    <button data-action="logout" class="w-full px-3 py-2.5 rounded-lg text-left hover:bg-white/10 transition-colors flex items-center gap-3 text-red-500">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
                         </svg>
                         <span class="font-medium">Logout</span>
                     </button>
@@ -142,65 +142,60 @@
         </div>
     </nav>
 
-    <!-- Main Content -->
+    <!-- ════════════════════════════════════════════
+         MAIN CONTENT
+    ════════════════════════════════════════════ -->
     <main class="main-content">
         <div class="max-w-7xl mx-auto">
-            
-            <!-- Home Tab -->
+
+            <!-- ── Home Tab ────────────────────────────────────────────────── -->
             <div id="tab-home" class="tab-content active">
                 <div class="text-center py-12 animate-fade-in-up">
                     <div class="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-gradient-to-br from-primary to-secondary mb-6 shadow-xl shadow-primary/30 animate-float">
                         <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
                         </svg>
                     </div>
-                    <h1 class="text-5xl font-bold font-heading mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                        Welcome to SAFEPASS
-                    </h1>
-                    <p class="text-xl text-muted mb-12 max-w-2xl mx-auto">
-                        Your intelligent attendance tracking system for enhanced campus security and streamlined student monitoring.
-                    </p>
+                    <h1 class="text-5xl font-bold font-heading mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Welcome to SAFEPASS</h1>
+                    <p class="text-xl text-muted mb-12 max-w-2xl mx-auto">Your intelligent attendance tracking system for enhanced campus security and streamlined student monitoring.</p>
                 </div>
 
-                <!-- Quick Stats Overview -->
+                <!-- Stats -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                     <div class="stat-card">
                         <div class="stat-card-icon bg-blue-500/10">
                             <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
                             </svg>
                         </div>
-                        <div class="stat-card-value" id="stat-total-students">1,234</div>
+                        <div class="stat-card-value" id="stat-total-students">—</div>
                         <div class="stat-card-label">Total Students</div>
                     </div>
-
                     <div class="stat-card">
                         <div class="stat-card-icon bg-green-500/10">
                             <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                             </svg>
                         </div>
-                        <div class="stat-card-value" id="stat-on-campus">856</div>
+                        <div class="stat-card-value" id="stat-on-campus">—</div>
                         <div class="stat-card-label">On Campus Now</div>
                     </div>
-
                     <div class="stat-card">
                         <div class="stat-card-icon bg-purple-500/10">
                             <svg class="w-6 h-6 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
                             </svg>
                         </div>
-                        <div class="stat-card-value" id="stat-in-class">342</div>
+                        <div class="stat-card-value" id="stat-in-class">—</div>
                         <div class="stat-card-label">In Class</div>
                     </div>
-
                     <div class="stat-card">
                         <div class="stat-card-icon bg-red-500/10">
                             <svg class="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
                             </svg>
                         </div>
-                        <div class="stat-card-value" id="stat-violations">5</div>
+                        <div class="stat-card-value" id="stat-violations">—</div>
                         <div class="stat-card-label">Active Violations</div>
                     </div>
                 </div>
@@ -211,13 +206,13 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <button onclick="navigateToTab('campus')" class="btn-secondary justify-start gap-3 text-left">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
                             </svg>
                             View Campus Activity
                         </button>
                         <button onclick="navigateToTab('classroom')" class="btn-secondary justify-start gap-3 text-left">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
                             </svg>
                             Check Classroom Status
                         </button>
@@ -225,58 +220,53 @@
                 </div>
             </div>
 
-            <!-- Campus Tab -->
+            <!-- ── Campus Tab ──────────────────────────────────────────────── -->
             <div id="tab-campus" class="tab-content hidden">
                 <div class="mb-8">
                     <h1 class="text-3xl font-bold font-heading mb-2">Campus Monitoring</h1>
                     <p class="text-muted">Real-time tracking of student entry and exit on campus</p>
                 </div>
 
-                <!-- Campus Stats -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                     <div class="stat-card">
                         <div class="stat-card-icon bg-green-500/10">
                             <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
                             </svg>
                         </div>
-                        <div class="stat-card-value" id="campus-entered">856</div>
+                        <div class="stat-card-value" id="campus-entered">—</div>
                         <div class="stat-card-label">Entered Today</div>
                     </div>
-
                     <div class="stat-card">
                         <div class="stat-card-icon bg-red-500/10">
                             <svg class="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
                             </svg>
                         </div>
-                        <div class="stat-card-value" id="campus-exited">378</div>
+                        <div class="stat-card-value" id="campus-exited">—</div>
                         <div class="stat-card-label">Exited Today</div>
                     </div>
-
                     <div class="stat-card">
                         <div class="stat-card-icon bg-blue-500/10">
                             <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
                             </svg>
                         </div>
-                        <div class="stat-card-value" id="campus-current">478</div>
+                        <div class="stat-card-value" id="campus-current">—</div>
                         <div class="stat-card-label">Currently On Campus</div>
                     </div>
                 </div>
 
-                <!-- Students On Campus Table -->
                 <div class="glass-card p-6 rounded-3xl">
                     <div class="flex items-center justify-between mb-6">
                         <h2 class="text-xl font-bold font-heading">Students Currently On Campus</h2>
                         <button class="btn-secondary" onclick="refreshCampusData()">
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
                             </svg>
                             Refresh
                         </button>
                     </div>
-                    
                     <div class="overflow-x-auto">
                         <table class="data-table">
                             <thead>
@@ -289,327 +279,94 @@
                                 </tr>
                             </thead>
                             <tbody id="campus-table-body">
-                                <!-- Data populated by JavaScript -->
+                                <tr><td colspan="5" class="text-center py-8 text-muted">Loading…</td></tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
 
-            <!-- Classroom Tab -->
+            <!-- ── Classroom Tab ───────────────────────────────────────────── -->
             <div id="tab-classroom" class="tab-content hidden">
                 <div class="mb-8">
                     <h1 class="text-3xl font-bold font-heading mb-2">Classroom Monitoring</h1>
                     <p class="text-muted">Track student attendance and violations in classrooms</p>
                 </div>
 
-                <!-- Classroom Stats -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                     <div class="stat-card">
                         <div class="stat-card-icon bg-purple-500/10">
                             <svg class="w-6 h-6 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
                             </svg>
                         </div>
-                        <div class="stat-card-value" id="classroom-present">342</div>
+                        <div class="stat-card-value" id="classroom-present">—</div>
                         <div class="stat-card-label">Present in Class</div>
                     </div>
-
                     <div class="stat-card">
                         <div class="stat-card-icon bg-yellow-500/10">
                             <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
                             </svg>
                         </div>
-                        <div class="stat-card-value" id="classroom-outside">23</div>
+                        <div class="stat-card-value" id="classroom-outside">—</div>
                         <div class="stat-card-label">Outside Class</div>
                     </div>
-
                     <div class="stat-card">
                         <div class="stat-card-icon bg-green-500/10">
                             <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                             </svg>
                         </div>
-                        <div class="stat-card-value">93.7%</div>
+                        <div class="stat-card-value" id="attendance-rate">—</div>
                         <div class="stat-card-label">Attendance Rate</div>
                     </div>
                 </div>
 
-                <!-- All Students in Classroom -->
                 <div class="glass-card p-6 rounded-3xl">
-                    <h2 class="text-xl font-bold font-heading mb-6">All Students - Class Status</h2>
-                    
-                    <div class="overflow-x-auto">
+                    <h2 class="text-xl font-bold font-heading mb-6">Junior High</h2>
+                    <h3 class="text-md font-semibold mb-4">Grade 10 — Wisdom</h3>
+                    <div class="overflow-x-auto mb-8">
                         <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th>Student ID</th>
-                                    <th>Name</th>
-                                    <th>Class</th>
-                                    <th>Check-in Time</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody id="classroom-table-body">
-                                <!-- Data populated by JavaScript -->
-                            </tbody>
+                        <thead>
+                            <tr>
+                            <th>Student ID</th>
+                            <th>Name</th>
+                            <th>Course</th>
+                            <th>Check-in Time</th>
+                            <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="classroom-grade10-body">
+                            <tr><td colspan="5" class="text-center py-8 text-muted">Loading…</td></tr>
+                        </tbody>
                         </table>
                     </div>
-                </div>
+
+                    <h2 class="text-xl font-bold font-heading mb-6">Senior High</h2>
+                    <h3 class="text-md font-semibold mb-4">Grade 12 — Earth</h3>
+                    <div class="overflow-x-auto">
+                        <table class="data-table">
+                        <thead>
+                            <tr>
+                            <th>Student ID</th>
+                            <th>Name</th>
+                            <th>Course</th>
+                            <th>Check-in Time</th>
+                            <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="classroom-grade12-body">
+                            <tr><td colspan="5" class="text-center py-8 text-muted">Loading…</td></tr>
+                        </tbody>
+                        </table>
+                    </div>
+                    </div>
             </div>
 
         </div>
     </main>
 
-    <!-- Scripts -->
-    <script src="../js/script.js"></script>
-    <script>
-        // Tab navigation
-        function navigateToTab(tabName) {
-            // Hide all tabs
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.add('hidden');
-                tab.classList.remove('active');
-            });
-            
-            // Remove active from all nav tabs
-            document.querySelectorAll('.nav-tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            // Show selected tab
-            document.getElementById(`tab-${tabName}`).classList.remove('hidden');
-            document.getElementById(`tab-${tabName}`).classList.add('active');
-            
-            // Mark nav tab as active
-            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
-            
-            // Update mobile nav state
-            updateMobileNavState(tabName);
-            
-            // Load data for the tab
-            loadTabData(tabName);
-        }
-
-        // Event listeners for nav tabs
-        document.querySelectorAll('.nav-tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                const tabName = tab.getAttribute('data-tab');
-                navigateToTab(tabName);
-            });
-        });
-
-        // Event listeners for mobile nav tabs
-        document.querySelectorAll('.mobile-nav-tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                const tabName = tab.getAttribute('data-tab');
-                navigateToTab(tabName);
-                
-                // Close mobile menu after selection
-                toggleMobileMenu();
-            });
-        });
-
-        // Mobile menu toggle
-        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const hamburgerIcon = document.getElementById('hamburgerIcon');
-        const closeIcon = document.getElementById('closeIcon');
-
-        function toggleMobileMenu() {
-            mobileMenu.classList.toggle('hidden');
-            mobileMenu.classList.toggle('active');
-            hamburgerIcon.classList.toggle('hidden');
-            closeIcon.classList.toggle('hidden');
-        }
-
-        if (mobileMenuToggle) {
-            mobileMenuToggle.addEventListener('click', toggleMobileMenu);
-        }
-
-        // User dropdown toggle
-        const userMenuButton = document.getElementById('userMenuButton');
-        const userDropdown = document.getElementById('userDropdown');
-        const userMenuChevron = document.getElementById('userMenuChevron');
-
-        if (userMenuButton) {
-            userMenuButton.addEventListener('click', (e) => {
-                e.stopPropagation();
-                userDropdown.classList.toggle('hidden');
-                userMenuChevron.classList.toggle('rotate-180');
-            });
-        }
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', (e) => {
-            if (userDropdown && !userDropdown.classList.contains('hidden')) {
-                if (!userMenuButton.contains(e.target) && !userDropdown.contains(e.target)) {
-                    userDropdown.classList.add('hidden');
-                    userMenuChevron.classList.remove('rotate-180');
-                }
-            }
-        });
-
-        // Update mobile nav active state when tab changes
-        function updateMobileNavState(tabName) {
-            document.querySelectorAll('.mobile-nav-tab').forEach(tab => {
-                if (tab.getAttribute('data-tab') === tabName) {
-                    tab.classList.add('active');
-                } else {
-                    tab.classList.remove('active');
-                }
-            });
-        }
-
-        // Load data for specific tab
-        function loadTabData(tabName) {
-            switch(tabName) {
-                case 'campus':
-                    loadCampusData();
-                    break;
-                case 'classroom':
-                    loadClassroomData();
-                    break;
-                case 'home':
-                    loadHomeStats();
-                    break;
-            }
-        }
-
-        // Initialize dashboard on load
-        document.addEventListener('DOMContentLoaded', () => {
-            // Check authentication
-            if (!Auth.isAuthenticated()) {
-                window.location.href = '../../index.html';
-                return;
-            }
-            
-            // Load user info
-            const user = Auth.getCurrentUser();
-            if (user) {
-                const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase();
-                document.getElementById('userName').textContent = user.name;
-                document.getElementById('userInitials').textContent = initials;
-                document.getElementById('mobileUserName').textContent = user.name;
-                document.getElementById('mobileUserInitials').textContent = initials;
-            }
-            
-            // Load initial data
-            loadHomeStats();
-            loadCampusData();
-            loadClassroomData();
-        });
-
-        // Logout function
-        function logout() {
-            if (confirm('Are you sure you want to logout?')) {
-                Auth.logout();
-                window.location.href = '../../index.html';
-            }
-        }
-
-        // Data loading functions
-        function loadHomeStats() {
-            const stats = AttendanceSystem.getStats();
-            document.getElementById('stat-total-students').textContent = stats.totalStudents;
-            document.getElementById('stat-on-campus').textContent = stats.onCampus;
-            document.getElementById('stat-in-class').textContent = stats.inClass;
-            document.getElementById('stat-violations').textContent = stats.violations;
-        }
-
-        function loadCampusData() {
-            const data = AttendanceSystem.getCampusData();
-            document.getElementById('campus-entered').textContent = data.entered;
-            document.getElementById('campus-exited').textContent = data.exited;
-            document.getElementById('campus-current').textContent = data.current;
-            
-            const tbody = document.getElementById('campus-table-body');
-            tbody.innerHTML = data.students.map(student => `
-                <tr>
-                    <td><span class="font-mono text-primary">${student.id}</span></td>
-                    <td><span class="font-semibold">${student.name}</span></td>
-                    <td>${student.entryTime}</td>
-                    <td>${student.location}</td>
-                    <td><span class="badge badge-success">On Campus</span></td>
-                </tr>
-            `).join('');
-        }
-
-        function loadClassroomData() {
-            const data = AttendanceSystem.getClassroomData();
-            document.getElementById('classroom-present').textContent = data.present;
-            document.getElementById('classroom-outside').textContent = data.outside;
-            
-            // Load classroom table
-            const classroomBody = document.getElementById('classroom-table-body');
-            classroomBody.innerHTML = data.students.map(s => `
-                <tr>
-                    <td><span class="font-mono text-primary">${s.id}</span></td>
-                    <td><span class="font-semibold">${s.name}</span></td>
-                    <td>${s.class}</td>
-                    <td>${s.checkInTime || '-'}</td>
-                    <td><span class="badge ${s.status === 'present' ? 'badge-success' : 'badge-warning'}">${s.status}</span></td>
-                </tr>
-            `).join('');
-        }
-
-        function refreshCampusData() {
-            showNotification('Refreshing campus data...', 'info');
-            setTimeout(() => {
-                loadCampusData();
-                showNotification('Data refreshed successfully!', 'success');
-            }, 1000);
-        }
-
-        function disableAlarm(studentId) {
-            if (confirm(`Disable alarm for student ${studentId}?`)) {
-                AttendanceSystem.disableAlarm(studentId);
-                loadClassroomData();
-                showNotification(`Alarm disabled for ${studentId}`, 'success');
-            }
-        }
-
-        function disableAllAlarms() {
-            if (confirm('Are you sure you want to disable all alarms?')) {
-                AttendanceSystem.disableAllAlarms();
-                loadClassroomData();
-                showNotification('All alarms disabled', 'success');
-            }
-        }
-
-        function generateReport() {
-            showNotification('Generating report...', 'info');
-            setTimeout(() => {
-                showNotification('Report generated successfully!', 'success');
-            }, 2000);
-        }
-
-        // Notification helper
-        function showNotification(message, type = 'info') {
-            const notification = document.createElement('div');
-            notification.className = `notification notification-${type} animate-slide-in-right`;
-            notification.innerHTML = `
-                <div class="flex items-center gap-3">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        ${type === 'success' ? 
-                            '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>' :
-                            type === 'error' ?
-                            '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>' :
-                            '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>'
-                        }
-                    </svg>
-                    <span>${message}</span>
-                </div>
-            `;
-            
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.classList.add('animate-slide-out-right');
-                setTimeout(() => notification.remove(), 300);
-            }, 3000);
-        }
-    </script>
+    <script type="module" src="../js/dashboard.js"></script>
 </body>
 </html>

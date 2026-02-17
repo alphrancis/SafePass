@@ -1,18 +1,24 @@
-/**
- * SAFEPASS - Intelligent Attendance Tracking System
- * Main JavaScript File
- * 
- * This file contains all the core functionality including:
- * - Authentication (Login/Signup/Logout)
- * - Theme Management (Light/Dark Mode)
- * - CRUD Operations (Firebase-ready)
- * - Attendance Tracking
- * - Data Management
- */
+import { auth, db } from "./firebase.js";
 
-// ============================================================================
-// THEME MANAGEMENT
-// ============================================================================
+import {
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
+    signOut,
+    onAuthStateChanged,
+    updateProfile
+} from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
+
+import {
+    ref,
+    push,
+    set,
+    get,
+    update,
+    remove
+} from "https://www.gstatic.com/firebasejs/12.9.0/firebase-database.js";
+
+
+
 
 class ThemeManager {
     constructor() {
@@ -52,201 +58,101 @@ class ThemeManager {
     }
 }
 
-// Initialize theme manager
 const themeManager = new ThemeManager();
-
-// ============================================================================
-// FIREBASE CONFIGURATION (Ready for Integration)
-// ============================================================================
-
-/**
- * Firebase Configuration Object
- * Replace these values with your actual Firebase project credentials
- */
-const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_AUTH_DOMAIN",
-    databaseURL: "YOUR_DATABASE_URL",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_STORAGE_BUCKET",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
-};
-
-/**
- * Firebase Initialization Function
- * Uncomment when ready to integrate with Firebase
- */
-/*
-// Import Firebase modules
-import { initializeApp } from 'firebase/app';
-import { getDatabase } from 'firebase/database';
-import { getAuth } from 'firebase/auth';
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const database = getDatabase(app);
-const auth = getAuth(app);
-*/
-
-// ============================================================================
-// AUTHENTICATION SYSTEM
-// ============================================================================
 
 class AuthenticationSystem {
     constructor() {
         this.currentUser = null;
-        this.loadCurrentUser();
+
+        // Listen to auth state
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                this.currentUser = user;
+                console.log("User logged in:", user.email);
+            } else {
+                this.currentUser = null;
+                console.log("No user logged in");
+            }
+        });
     }
 
-    /**
-     * User Login
-     * @param {string} email - User email
-     * @param {string} password - User password
-     * @returns {Promise<Object>} - Login result
-     */
     async login(email, password) {
         try {
-            // TODO: Replace with Firebase Authentication
-            /*
-            import { signInWithEmailAndPassword } from 'firebase/auth';
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            const user = userCredential.user;
-            */
-
-            // Simulated authentication for demo
-            await this.simulateDelay(1000);
-
-            // Mock user data
-            const user = {
-                uid: 'user_' + Date.now(),
-                email: email,
-                name: email.split('@')[0],
-                role: 'admin',
-                createdAt: new Date().toISOString()
-            };
-
-            // Store user data
-            this.currentUser = user;
-            localStorage.setItem('safepass_user', JSON.stringify(user));
-            localStorage.setItem('safepass_authenticated', 'true');
 
             return {
                 success: true,
-                message: 'Login successful',
-                user: user
+                message: "Login successful",
+                user: userCredential.user
             };
         } catch (error) {
-            console.error('Login error:', error);
             return {
                 success: false,
-                message: 'Invalid credentials. Please try again.'
+                message: error.message
             };
         }
     }
 
-    /**
-     * User Signup/Registration
-     * @param {string} name - User full name
-     * @param {string} email - User email
-     * @param {string} password - User password
-     * @returns {Promise<Object>} - Signup result
-     */
     async signup(name, email, password) {
         try {
-            // TODO: Replace with Firebase Authentication
-            /*
-            import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            await updateProfile(userCredential.user, { displayName: name });
-            const user = userCredential.user;
-            */
 
-            // Simulated signup for demo
-            await this.simulateDelay(1500);
-
-            // Create user object
-            const user = {
-                uid: 'user_' + Date.now(),
-                email: email,
-                name: name,
-                role: 'user',
-                createdAt: new Date().toISOString()
-            };
-
-            // Store in database (Firebase Realtime Database or Firestore)
-            // await Database.createUser(user);
-
-            // Store user data
-            this.currentUser = user;
-            localStorage.setItem('safepass_user', JSON.stringify(user));
-            localStorage.setItem('safepass_authenticated', 'true');
+            await updateProfile(userCredential.user, {
+                displayName: name
+            });
 
             return {
                 success: true,
-                message: 'Account created successfully',
-                user: user
+                message: "Signup successful",
+                user: userCredential.user
             };
         } catch (error) {
-            console.error('Signup error:', error);
             return {
                 success: false,
-                message: 'Signup failed. Email may already be in use.'
+                message: error.message
             };
         }
     }
 
-    /**
-     * User Logout
-     */
-    logout() {
-        // TODO: Replace with Firebase signOut
-        /*
-        import { signOut } from 'firebase/auth';
+    async logout() {
         await signOut(auth);
-        */
-
-        this.currentUser = null;
-        localStorage.removeItem('safepass_user');
-        localStorage.removeItem('safepass_authenticated');
     }
 
-    /**
-     * Check if user is authenticated
-     * @returns {boolean}
-     */
     isAuthenticated() {
-        return localStorage.getItem('safepass_authenticated') === 'true';
+        return this.currentUser !== null;
     }
 
-    /**
-     * Get current logged-in user
-     * @returns {Object|null}
-     */
     getCurrentUser() {
         return this.currentUser;
     }
-
-    /**
-     * Load current user from storage
-     */
-    loadCurrentUser() {
-        const userStr = localStorage.getItem('safepass_user');
-        if (userStr) {
-            this.currentUser = JSON.parse(userStr);
-        }
-    }
-
-    /**
-     * Simulate async delay for demo
-     */
-    simulateDelay(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
 }
 
-// Initialize Auth System
 const Auth = new AuthenticationSystem();
+
+const loginForm = document.getElementById("loginForm");
+
+if (loginForm) {
+    loginForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        const result = await Auth.login(email, password);
+
+        if (result.success) {
+            console.log("Login success, redirecting...");
+            window.location.href = "/src/html/dashboard.html";
+        } else {
+            console.error(result.message);
+            alert(result.message);
+        }
+    });
+}
+
+
+// Initialize Auth System
+
 
 // ============================================================================
 // DATABASE OPERATIONS (Firebase-Ready CRUD)
@@ -254,20 +160,14 @@ const Auth = new AuthenticationSystem();
 
 class DatabaseOperations {
     constructor() {
-        // Database reference will be initialized with Firebase
-        this.db = null;
+        this.db = db;
     }
 
-    /**
-     * Initialize Firebase Database
-     * Uncomment when integrating with Firebase
-     */
-    /*
+
     initializeDatabase() {
-        import { getDatabase, ref } from 'firebase/database';
         this.db = getDatabase();
     }
-    */
+
 
     // ========================================
     // CREATE OPERATIONS
@@ -278,36 +178,22 @@ class DatabaseOperations {
      * @param {Object} studentData - Student information
      * @returns {Promise<Object>}
      */
-    async createStudent(studentData) {
-        try {
-            // TODO: Firebase Implementation
-            /*
-            import { ref, push, set } from 'firebase/database';
-            const studentsRef = ref(this.db, 'students');
-            const newStudentRef = push(studentsRef);
-            await set(newStudentRef, {
-                ...studentData,
-                createdAt: new Date().toISOString(),
-                updatedAt: new Date().toISOString()
-            });
-            return { success: true, id: newStudentRef.key };
-            */
+async createStudent(studentData) {
+    try {
+        const studentsRef = ref(this.db, 'students');
+        const newStudentRef = push(studentsRef);
 
-            // Simulated for demo
-            const studentId = 'STU_' + Date.now();
-            const student = {
-                id: studentId,
-                ...studentData,
-                createdAt: new Date().toISOString()
-            };
+        await set(newStudentRef, {
+            ...studentData,
+            createdAt: new Date().toISOString()
+        });
 
-            console.log('Student created:', student);
-            return { success: true, id: studentId, data: student };
-        } catch (error) {
-            console.error('Error creating student:', error);
-            return { success: false, error: error.message };
-        }
+        return { success: true, id: newStudentRef.key };
+    } catch (error) {
+        return { success: false, error: error.message };
     }
+}
+
 
     /**
      * Record student entry/exit
@@ -388,32 +274,28 @@ class DatabaseOperations {
      * @returns {Promise<Array>}
      */
     async getAllStudents() {
-        try {
-            // TODO: Firebase Implementation
-            /*
-            import { ref, get } from 'firebase/database';
-            const studentsRef = ref(this.db, 'students');
-            const snapshot = await get(studentsRef);
-            if (snapshot.exists()) {
-                const students = [];
-                snapshot.forEach((childSnapshot) => {
-                    students.push({
-                        id: childSnapshot.key,
-                        ...childSnapshot.val()
-                    });
-                });
-                return students;
-            }
-            return [];
-            */
+    try {
+        const studentsRef = ref(this.db, 'students');
+        const snapshot = await get(studentsRef);
 
-            // Return mock data for demo
-            return this.getMockStudents();
-        } catch (error) {
-            console.error('Error fetching students:', error);
-            return [];
+        const students = [];
+
+        if (snapshot.exists()) {
+            snapshot.forEach(child => {
+                students.push({
+                    id: child.key,
+                    ...child.val()
+                });
+            });
         }
+
+        return students;
+    } catch (error) {
+        console.error(error);
+        return [];
     }
+}
+
 
     /**
      * Get student by ID
@@ -446,38 +328,29 @@ class DatabaseOperations {
      * @param {Object} filters - Query filters (date, studentId, etc.)
      * @returns {Promise<Array>}
      */
-    async getAttendanceRecords(filters = {}) {
-        try {
-            // TODO: Firebase Implementation with queries
-            /*
-            import { ref, query, orderByChild, equalTo, get } from 'firebase/database';
-            const attendanceRef = ref(this.db, 'attendance');
-            let attendanceQuery = attendanceRef;
-            
-            if (filters.studentId) {
-                attendanceQuery = query(attendanceRef, 
-                    orderByChild('studentId'), 
-                    equalTo(filters.studentId)
-                );
-            }
-            
-            const snapshot = await get(attendanceQuery);
-            const records = [];
-            snapshot.forEach((childSnapshot) => {
-                records.push({
-                    id: childSnapshot.key,
-                    ...childSnapshot.val()
+async getAllStudents() {
+    try {
+        const studentsRef = ref(this.db, 'students');
+        const snapshot = await get(studentsRef);
+
+        const students = [];
+
+        if (snapshot.exists()) {
+            snapshot.forEach(child => {
+                students.push({
+                    id: child.key,
+                    ...child.val()
                 });
             });
-            return records;
-            */
-
-            return this.getMockAttendanceRecords();
-        } catch (error) {
-            console.error('Error fetching attendance records:', error);
-            return [];
         }
+
+        return students;
+    } catch (error) {
+        console.error(error);
+        return [];
     }
+}
+
 
     /**
      * Get active violations
@@ -1023,3 +896,5 @@ console.log('SAFEPASS System Initialized');
 console.log('Authentication System:', Auth);
 console.log('Database Operations:', Database);
 console.log('Attendance System:', AttendanceSystem);
+
+window.Auth = Auth;
