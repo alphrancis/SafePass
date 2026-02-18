@@ -19,14 +19,21 @@
             <!-- Logo -->
             <div class="flex items-center gap-3 flex-shrink-0">
                 <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-lg">
-                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-                    </svg>
+                    <a href="#" class="inline-block" onclick="window.navigateToTab('home'); return false;">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            style="color: var(--color-text);">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                        </svg>
+                    </a>
                 </div>
-                <span class="text-xl font-bold font-heading">SAFEPASS</span>
+                    <a href="#" 
+                    class="text-xl font-bold font-heading no-underline text-inherit" 
+                    onclick="window.navigateToTab('home'); return false;">
+                    SAFEPASS
+                    </a>
             </div>
 
-            <!-- Desktop Nav Tabs -->
             <div class="hidden lg:flex items-center gap-3 flex-1 justify-center max-w-2xl mx-8">
                 <div class="nav-tab active" data-tab="home">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -63,9 +70,9 @@
                 <!-- User Dropdown (desktop) -->
                 <div class="relative hidden sm:block">
                     <button id="userMenuButton" class="flex items-center gap-2 p-2 rounded-lg hover:bg-white/10 transition-all">
-                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
-                            <span class="text-white text-sm font-bold" id="userInitials">??</span>
-                        </div>
+                        <span class="text-sm font-bold" id="userInitials" 
+                            style="color: var(--color-text);"> ??
+                        </span>
                         <span class="font-medium" id="userName">Loading…</span>
                         <svg class="w-4 h-4 transition-transform" id="userMenuChevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
@@ -152,11 +159,13 @@
             <div id="tab-home" class="tab-content active">
                 <div class="text-center py-12 animate-fade-in-up">
                     <div class="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-gradient-to-br from-primary to-secondary mb-6 shadow-xl shadow-primary/30 animate-float">
-                        <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-                        </svg>
+<svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+     style="color: var(--color-text);">
+  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+</svg>
                     </div>
-                    <h1 class="text-5xl font-bold font-heading mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Welcome to SAFEPASS</h1>
+                    <h1 class="text-5xl font-bold font-heading mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text">Welcome to SAFEPASS</h1>
                     <p class="text-xl text-muted mb-12 max-w-2xl mx-auto">Your intelligent attendance tracking system for enhanced campus security and streamlined student monitoring.</p>
                 </div>
 

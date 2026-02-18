@@ -89,12 +89,12 @@ window.navigateToTab = function (tabName) {
   loadTabData(tabName);
 };
 
-// Wire nav-tab clicks
+
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".nav-tab, .mobile-nav-tab").forEach((tab) => {
     tab.addEventListener("click", () => {
       window.navigateToTab(tab.getAttribute("data-tab"));
-      // Close mobile menu if open
+
       const mobileMenu = document.getElementById("mobileMenu");
       if (mobileMenu && !mobileMenu.classList.contains("hidden")) {
         toggleMobileMenu();
@@ -270,8 +270,6 @@ function renderClassroomData(data) {
 
 async function loadClassroomData() {
   try {
-    const data = await getClassroomData("2026-02-14");
-
     setEl("classroom-present", data.present);
     setEl("classroom-outside", data.outside);
     setEl("classroom-violations", data.violations);
@@ -314,7 +312,6 @@ window.refreshCampusData = async function () {
   showNotification("Data refreshed!", "success");
 };
 
-// ─── Util ─────────────────────────────────────────────────────────────────────
 
 function setEl(id, value) {
   const el = document.getElementById(id);
