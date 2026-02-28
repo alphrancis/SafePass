@@ -154,7 +154,6 @@ function subscribeHomeStats() {
 
 async function loadCampusData() {
   try {
-    const data = await getCampusData("2026-02-14");
     setEl("campus-entered", data.entered);
     setEl("campus-exited",  data.exited);
     setEl("campus-current", data.current);

@@ -5,7 +5,7 @@ import { database } from "./firebase-config.js";
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
 function todayStr() {
-  return new Date().toISOString().split("T")[0]; // "YYYY-MM-DD"
+  return new Date().toISOString().split("T")[0];
 }
 
 export function listenDashboardStats(date = todayStr(), callback) {
