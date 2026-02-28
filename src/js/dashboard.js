@@ -1,5 +1,5 @@
 import { requireAuth, logout as firebaseLogout } from "./auth.js";
-import { initTheme }      from "./theme.js";
+import { initTheme }        from "./theme.js";
 import { showNotification } from "./ui.js";
 import {
   listenDashboardStats,
@@ -10,7 +10,7 @@ import {
 } from "./attendance.js";
 
 function todayStr() {
-  return new Date().toISOString().split("T")[0]; // "YYYY-MM-DD"
+  return new Date().toISOString().split("T")[0];
 }
 
 // ─── Boot sequence ───────────────────────────────────────────────────────────
@@ -18,40 +18,35 @@ function todayStr() {
 document.addEventListener("DOMContentLoaded", async () => {
   initTheme();
 
-  const user = await requireAuth("../../index.html");
-const rawName = user.displayName || user.email;
-const cleanName = rawName.includes("@")
-  ? rawName.split("@")[0]   
-  : rawName;
+  const user      = await requireAuth("../../index.html");
+  const rawName   = user.displayName || user.email;
+  const cleanName = rawName.includes("@") ? rawName.split("@")[0] : rawName;
 
-const initials = cleanName
-  .split(/[.\s]/)       
-  .filter(Boolean)          
-  .map((n) => n[0])
-  .join("")
-  .toUpperCase()
-  .slice(0, 2);
+  const initials = cleanName
+    .split(/[.\s]/)
+    .filter(Boolean)
+    .map((n) => n[0])
+    .join("")
+    .toUpperCase()
+    .slice(0, 2);
 
-["userName", "mobileUserName"].forEach((id) => {
-  const el = document.getElementById(id);
-  if (el) el.textContent = cleanName;
-});
+  ["userName", "mobileUserName"].forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = cleanName;
+  });
 
-["userInitials", "mobileUserInitials"].forEach((id) => {
-  const el = document.getElementById(id);
-  if (el) el.textContent = initials;
-});
+  ["userInitials", "mobileUserInitials"].forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = initials;
+  });
 
-  // ── Wire up logout buttons ──────────────────────────────────────────────
   document.querySelectorAll("[data-action='logout']").forEach((btn) => {
     btn.addEventListener("click", handleLogout);
   });
 
-  // ── Load initial data ───────────────────────────────────────────────────
   subscribeHomeStats();
   subscribeCampusData();
   subscribeClassroomData();
-
 });
 
 // ─── Logout ──────────────────────────────────────────────────────────────────
@@ -62,7 +57,6 @@ async function handleLogout() {
   await firebaseLogout("../../index.html");
 }
 
-// Expose globally so inline onclick still works as a fallback
 window.logout = handleLogout;
 
 // ─── Tab Navigation ──────────────────────────────────────────────────────────
@@ -89,12 +83,10 @@ window.navigateToTab = function (tabName) {
   loadTabData(tabName);
 };
 
-
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".nav-tab, .mobile-nav-tab").forEach((tab) => {
     tab.addEventListener("click", () => {
       window.navigateToTab(tab.getAttribute("data-tab"));
-
       const mobileMenu = document.getElementById("mobileMenu");
       if (mobileMenu && !mobileMenu.classList.contains("hidden")) {
         toggleMobileMenu();
@@ -102,10 +94,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Mobile menu toggle
   document.getElementById("mobileMenuToggle")?.addEventListener("click", toggleMobileMenu);
 
-  // User dropdown toggle
   const userMenuBtn  = document.getElementById("userMenuButton");
   const userDropdown = document.getElementById("userDropdown");
   const chevron      = document.getElementById("userMenuChevron");
@@ -123,7 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function toggleMobileMenu() {
-  const menu     = document.getElementById("mobileMenu");
+  const menu      = document.getElementById("mobileMenu");
   const hamburger = document.getElementById("hamburgerIcon");
   const closeBtn  = document.getElementById("closeIcon");
   menu?.classList.toggle("hidden");
@@ -136,61 +126,24 @@ function toggleMobileMenu() {
 
 function loadTabData(tabName) {
   switch (tabName) {
-    case "home":      subscribeHomeStats();      break;
-    case "campus":    subscribeCampusData();     break;
-    case "classroom": subscribeClassroomData();  break;
+    case "home":      subscribeHomeStats();     break;
+    case "campus":    subscribeCampusData();    break;
+    case "classroom": subscribeClassroomData(); break;
   }
 }
+
+// ─── Home ─────────────────────────────────────────────────────────────────────
 
 function subscribeHomeStats() {
   listenDashboardStats(todayStr(), (stats) => {
     setEl("stat-total-students", stats.totalStudents);
-    setEl("stat-on-campus", stats.onCampus);
-    setEl("stat-in-class", stats.inClass);
-    setEl("stat-violations", stats.violations);
+    setEl("stat-on-campus",      stats.onCampus);
+    setEl("stat-in-class",       stats.inClass);
+    setEl("stat-violations",     stats.violations);
   });
 }
 
-
-async function loadCampusData() {
-  try {
-    setEl("campus-entered", data.entered);
-    setEl("campus-exited",  data.exited);
-    setEl("campus-current", data.current);
-
-    const tbody = document.getElementById("campus-table-body");
-    if (!tbody) return;
-
-    if (data.students.length === 0) {
-      tbody.innerHTML = `
-        <tr>
-          <td colspan="5" class="text-center py-8 text-muted">
-            No students on campus today.
-          </td>
-        </tr>`;
-      return;
-    }
-
-    tbody.innerHTML = data.students
-      .map(
-        (s) => `
-      <tr>
-        <td><span class="font-mono text-primary">${s.id}</span></td>
-        <td><span class="font-semibold">${s.name}</span></td>
-        <td>${s.entryTime}</td>
-        <td>${s.location}</td>
-        <td>
-          <span class="badge ${s.status === "inside" ? "badge-success" : "badge-warning"}">
-            ${s.status}
-          </span>
-        </td>
-      </tr>`
-      )
-      .join("");
-  } catch (err) {
-    console.error("loadCampusData:", err);
-  }
-}
+// ─── Campus ──────────────────────────────────────────────────────────────────
 
 function subscribeCampusData() {
   listenCampusLogs(todayStr(), async () => {
@@ -199,9 +152,18 @@ function subscribeCampusData() {
   });
 }
 
+async function loadCampusData() {
+  try {
+    const data = await getCampusData(todayStr());
+    renderCampusData(data);
+  } catch (err) {
+    console.error("loadCampusData:", err);
+  }
+}
+
 function renderCampusData(data) {
   setEl("campus-entered", data.entered);
-  setEl("campus-exited", data.exited);
+  setEl("campus-exited",  data.exited);
   setEl("campus-current", data.current);
 
   const tbody = document.getElementById("campus-table-body");
@@ -213,6 +175,7 @@ function renderCampusData(data) {
         <td><span class="font-mono text-primary">${s.id}</span></td>
         <td><span class="font-semibold">${s.name}</span></td>
         <td>${s.entryTime}</td>
+        <td>${s.exitTime}</td>
         <td>${s.location}</td>
         <td>
           <span class="badge ${s.status === "inside" ? "badge-success" : "badge-warning"}">
@@ -220,8 +183,10 @@ function renderCampusData(data) {
           </span>
         </td>
       </tr>`).join("")
-    : `<tr><td colspan="5" class="text-center py-8 text-muted">No students on campus today.</td></tr>`;
+    : `<tr><td colspan="6" class="text-center py-8 text-muted">No students on campus today.</td></tr>`;
 }
+
+// ─── Classroom ────────────────────────────────────────────────────────────────
 
 function subscribeClassroomData() {
   listenAttendance(todayStr(), async () => {
@@ -230,20 +195,29 @@ function subscribeClassroomData() {
   });
 }
 
+async function loadClassroomData() {
+  try {
+    const data = await getClassroomData(todayStr());
+    renderClassroomData(data);
+  } catch (err) {
+    console.error("loadClassroomData:", err);
+  }
+}
+
 function renderClassroomData(data) {
-  setEl("classroom-present", data.present);
-  setEl("classroom-outside", data.outside);
+  setEl("classroom-present",    data.present);
+  setEl("classroom-outside",    data.outside);
   setEl("classroom-violations", data.violations);
 
   const total = data.students.length;
-  const rate = total > 0 ? ((data.present / total) * 100).toFixed(1) : 0;
+  const rate  = total > 0 ? ((data.present / total) * 100).toFixed(1) : 0;
   setEl("attendance-rate", `${rate}%`);
 
   const grade10Body = document.getElementById("classroom-grade10-body");
   const grade12Body = document.getElementById("classroom-grade12-body");
 
-  grade10Body.innerHTML = "";
-  grade12Body.innerHTML = "";
+  if (grade10Body) grade10Body.innerHTML = "";
+  if (grade12Body) grade12Body.innerHTML = "";
 
   data.students.forEach((s) => {
     const row = `
@@ -266,44 +240,7 @@ function renderClassroomData(data) {
   });
 }
 
-
-async function loadClassroomData() {
-  try {
-    setEl("classroom-present", data.present);
-    setEl("classroom-outside", data.outside);
-    setEl("classroom-violations", data.violations);
-
-    const grade10Body = document.getElementById("classroom-grade10-body");
-    const grade12Body = document.getElementById("classroom-grade12-body");
-
-    if (grade10Body) grade10Body.innerHTML = "";
-    if (grade12Body) grade12Body.innerHTML = "";
-
-    data.students.forEach((s) => {
-      const row = `
-        <tr>
-          <td><span class="font-mono text-primary">${s.id}</span></td>
-          <td><span class="font-semibold">${s.name}</span></td>
-          <td>${s.class}</td>
-          <td>${s.checkInTime}</td>
-          <td>
-            <span class="badge ${s.status === "inside" ? "badge-success" : "badge-warning"}">
-              ${s.status}
-            </span>
-          </td>
-        </tr>`;
-
-      
-      if (s.id === "61342C17") {
-        grade10Body.innerHTML += row;
-      } else {
-        grade12Body.innerHTML += row;
-      }
-    });
-  } catch (err) {
-    console.error("loadClassroomData:", err);
-  }
-}
+// ─── Refresh Buttons ──────────────────────────────────────────────────────────
 
 window.refreshCampusData = async function () {
   showNotification("Refreshing campus data…", "info");
@@ -311,6 +248,13 @@ window.refreshCampusData = async function () {
   showNotification("Data refreshed!", "success");
 };
 
+window.refreshClassroomData = async function () {
+  showNotification("Refreshing classroom data…", "info");
+  await loadClassroomData();
+  showNotification("Data refreshed!", "success");
+};
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
 
 function setEl(id, value) {
   const el = document.getElementById(id);
