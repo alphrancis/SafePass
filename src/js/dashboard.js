@@ -7,6 +7,7 @@ import {
   listenAttendance,
   getCampusData,
   getClassroomData,
+  toggleAlarm,
 } from "./attendance.js";
 
 function todayStr() {
@@ -220,6 +221,16 @@ function renderClassroomData(data) {
   if (grade12Body) grade12Body.innerHTML = "";
 
   data.students.forEach((s) => {
+    // ── Status badge ──────────────────────────────────────────────────────
+    let badgeClass = "badge-warning";             // default: outside
+    if (s.status === "inside")     badgeClass = "badge-success";
+    if (s.status === "violation")  badgeClass = "badge-danger";
+
+    // ── Alarm toggle button ───────────────────────────────────────────────
+    const alarmIsOn     = s.authorizedExit === false;  // false = alarm ON
+    const alarmBtnClass = alarmIsOn ? "btn-alarm-on" : "btn-alarm-off";
+    const alarmBtnLabel = alarmIsOn ? "🔔  Alarm ON" : "🔕  Alarm OFF";
+
     const row = `
       <tr>
         <td><span class="font-mono text-primary">${s.id}</span></td>
@@ -227,11 +238,22 @@ function renderClassroomData(data) {
         <td>${s.class}</td>
         <td>${s.checkInTime}</td>
         <td>
-          <span class="badge ${s.status === "inside" ? "badge-success" : "badge-warning"}">
+          <span class="badge ${badgeClass}">
             ${s.status}
           </span>
         </td>
+        <td>
+          <button
+            class="alarm-toggle-btn ${alarmBtnClass}"
+            data-key="${s.firebaseKey}"
+            data-current="${s.authorizedExit}"
+            onclick="handleAlarmToggle(this)"
+          >
+            ${alarmBtnLabel}
+          </button>
+        </td>
       </tr>`;
+
     if (s.id === "61342C17") {
       grade10Body.innerHTML += row;
     } else {
@@ -239,6 +261,23 @@ function renderClassroomData(data) {
     }
   });
 }
+
+// ─── Alarm Toggle Handler ─────────────────────────────────────────────────────
+
+window.handleAlarmToggle = async function (btn) {
+  const firebaseKey = btn.getAttribute("data-key");
+  const currentValue = btn.getAttribute("data-current") === "true";
+
+
+  btn.disabled = true;
+  btn.textContent = "Updating…";
+
+  await toggleAlarm(todayStr(), firebaseKey, currentValue);
+  showNotification(
+    !currentValue ? "Alarm disabled for student." : "Alarm re-enabled for student.",
+    !currentValue ? "success" : "warning"
+  );
+};
 
 // ─── Refresh Buttons ──────────────────────────────────────────────────────────
 

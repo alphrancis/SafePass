@@ -1,12 +1,12 @@
-import { ref, get, onValue }
+import { ref, get, set, onValue }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 import { database } from "./firebase-config.js";
-
 
 function todayStr() {
   return new Date().toISOString().split("T")[0];
 }
 
+// ─── Dashboard Stats (live) ──────────────────────────────────────────────────
 
 export function listenDashboardStats(date = todayStr(), callback) {
   const campusRef     = ref(database, `campus_logs/${date}`);
@@ -24,12 +24,8 @@ export function listenDashboardStats(date = todayStr(), callback) {
     if (latestCampusSnap.exists()) {
       latestCampusSnap.forEach((child) => {
         const val = child.val();
-        if (val.CAMPUS_ENTRY) {
-          entrySet.add(val.CAMPUS_ENTRY.studentID?.toUpperCase());
-        }
-        if (val.CAMPUS_EXIT) {
-          exitSet.add(val.CAMPUS_EXIT.studentID?.toUpperCase());
-        }
+        if (val.CAMPUS_ENTRY) entrySet.add(val.CAMPUS_ENTRY.studentID?.toUpperCase());
+        if (val.CAMPUS_EXIT)  exitSet.add(val.CAMPUS_EXIT.studentID?.toUpperCase());
       });
     }
 
@@ -40,12 +36,13 @@ export function listenDashboardStats(date = todayStr(), callback) {
 
     if (latestAttendanceSnap.exists()) {
       latestAttendanceSnap.forEach((child) => {
-        const val = child.val();
+        const val     = child.val();
         const timeIn  = val.TIME_IN?.timeIn  || val.timeIn  || "";
         const timeOut = val.TIME_OUT?.timeOut || val.timeOut || "";
         const alarm   = val.TIME_IN?.alarm   || val.alarm   || null;
 
-        if (timeIn && !timeOut) inClass++;
+        const isViolation = alarm?.type === "unauthorized_exit";
+        if (timeIn && !timeOut && !isViolation) inClass++;
         if (alarm?.type === "unauthorized_exit") violations++;
       });
     }
@@ -64,6 +61,7 @@ export function listenDashboardStats(date = todayStr(), callback) {
   onValue(attendanceRef, (snap) => { latestAttendanceSnap = snap; compute(); });
 }
 
+// ─── Students ────────────────────────────────────────────────────────────────
 
 export async function getStudents() {
   try {
@@ -90,6 +88,7 @@ export async function getStudents() {
   }
 }
 
+// ─── Campus Logs ─────────────────────────────────────────────────────────────
 
 export async function getCampusLogs(date = todayStr()) {
   try {
@@ -99,15 +98,9 @@ export async function getCampusLogs(date = todayStr()) {
     const logs = [];
     snap.forEach((child) => {
       const val = child.val();
-      if (val.CAMPUS_ENTRY) {
-        logs.push({ key: child.key, type: "campus_entry", ...val.CAMPUS_ENTRY });
-      }
-      if (val.CAMPUS_EXIT) {
-        logs.push({ key: child.key, type: "campus_exit", ...val.CAMPUS_EXIT });
-      }
-      if (!val.CAMPUS_ENTRY && !val.CAMPUS_EXIT) {
-        logs.push({ key: child.key, ...val });
-      }
+      if (val.CAMPUS_ENTRY) logs.push({ key: child.key, type: "campus_entry", ...val.CAMPUS_ENTRY });
+      if (val.CAMPUS_EXIT)  logs.push({ key: child.key, type: "campus_exit",  ...val.CAMPUS_EXIT  });
+      if (!val.CAMPUS_ENTRY && !val.CAMPUS_EXIT) logs.push({ key: child.key, ...val });
     });
     return logs;
   } catch (err) {
@@ -124,20 +117,15 @@ export function listenCampusLogs(date = todayStr(), callback) {
     const logs = [];
     snapshot.forEach((child) => {
       const val = child.val();
-      if (val.CAMPUS_ENTRY) {
-        logs.push({ key: child.key, type: "campus_entry", ...val.CAMPUS_ENTRY });
-      }
-      if (val.CAMPUS_EXIT) {
-        logs.push({ key: child.key, type: "campus_exit", ...val.CAMPUS_EXIT });
-      }
-      if (!val.CAMPUS_ENTRY && !val.CAMPUS_EXIT) {
-        logs.push({ key: child.key, ...val });
-      }
+      if (val.CAMPUS_ENTRY) logs.push({ key: child.key, type: "campus_entry", ...val.CAMPUS_ENTRY });
+      if (val.CAMPUS_EXIT)  logs.push({ key: child.key, type: "campus_exit",  ...val.CAMPUS_EXIT  });
+      if (!val.CAMPUS_ENTRY && !val.CAMPUS_EXIT) logs.push({ key: child.key, ...val });
     });
     callback(logs);
   });
 }
 
+// ─── Attendance ──────────────────────────────────────────────────────────────
 
 export async function getAttendance(date = todayStr()) {
   try {
@@ -150,16 +138,17 @@ export async function getAttendance(date = todayStr()) {
       if (val.TIME_IN || val.TIME_OUT) {
         const base = val.TIME_IN || val.TIME_OUT;
         records.push({
+          firebaseKey:    child.key,           // ← needed for alarm toggle
           studentID:      base.studentID,
           studentName:    base.studentName,
-          timeIn:         val.TIME_IN?.timeIn   || "",
-          timeOut:        val.TIME_OUT?.timeOut  || "",
+          timeIn:         val.TIME_IN?.timeIn  || "",
+          timeOut:        val.TIME_OUT?.timeOut || "",
           date:           base.date,
-          alarm:          val.TIME_IN?.alarm     || null,
+          alarm:          val.TIME_IN?.alarm   || null,
           authorizedExit: val.TIME_IN?.authorizedExit ?? true,
         });
       } else {
-        records.push({ key: child.key, ...val });
+        records.push({ firebaseKey: child.key, key: child.key, ...val });
       }
     });
     return records;
@@ -180,21 +169,35 @@ export function listenAttendance(date = todayStr(), callback) {
       if (val.TIME_IN || val.TIME_OUT) {
         const base = val.TIME_IN || val.TIME_OUT;
         records.push({
-          studentID:   base.studentID,
-          studentName: base.studentName,
-          timeIn:      val.TIME_IN?.timeIn  || "",
-          timeOut:     val.TIME_OUT?.timeOut || "",
-          date:        base.date,
-          alarm:       val.TIME_IN?.alarm   || null,
+          firebaseKey:  child.key,             // ← needed for alarm toggle
+          studentID:    base.studentID,
+          studentName:  base.studentName,
+          timeIn:       val.TIME_IN?.timeIn  || "",
+          timeOut:      val.TIME_OUT?.timeOut || "",
+          date:         base.date,
+          alarm:        val.TIME_IN?.alarm   || null,
+          authorizedExit: val.TIME_IN?.authorizedExit ?? true,
         });
       } else {
-        records.push({ key: child.key, ...val });
+        records.push({ firebaseKey: child.key, key: child.key, ...val });
       }
     });
     callback(records);
   });
 }
 
+// ─── Toggle Alarm (for Classroom ALARM column) ────────────────────────────────
+
+export async function toggleAlarm(date = todayStr(), firebaseKey, currentValue) {
+  try {
+    const alarmRef = ref(database, `attendance/${date}/${firebaseKey}/TIME_IN/authorizedExit`);
+    await set(alarmRef, !currentValue);
+  } catch (err) {
+    console.error("toggleAlarm error:", err);
+  }
+}
+
+// ─── Campus Data ─────────────────────────────────────────────────────────────
 
 export async function getCampusData(date = todayStr()) {
   const [campusLogs, students] = await Promise.all([getCampusLogs(date), getStudents()]);
@@ -206,21 +209,16 @@ export async function getCampusData(date = todayStr()) {
   const exitByStudent  = {};
 
   campusLogs.forEach((log) => {
-    console.log("RAW LOG:", JSON.stringify(log));
     const id = log.studentID?.toUpperCase();
     if (!id) return;
-    if (log.type === "campus_exit") {
-      exitByStudent[id] = log;
-    } else {
-      entryByStudent[id] = log;
-    }
+    if (log.type === "campus_exit") exitByStudent[id] = log;
+    else entryByStudent[id] = log;
   });
-
 
   const studentsOnCampus = Object.keys(entryByStudent).map((id) => {
     const entryLog  = entryByStudent[id];
     const exitLog   = exitByStudent[id];
-    const hasExited = !!exitByStudent[id]; 
+    const hasExited = !!exitLog;
 
     return {
       id:        entryLog.studentID,
@@ -240,6 +238,7 @@ export async function getCampusData(date = todayStr()) {
   };
 }
 
+// ─── Classroom Data ───────────────────────────────────────────────────────────
 
 export async function getClassroomData(date = todayStr()) {
   const [attendance, students] = await Promise.all([getAttendance(date), getStudents()]);
@@ -251,30 +250,42 @@ export async function getClassroomData(date = todayStr()) {
 
   const rows = attendance.map((r) => {
     const info = nameLookup[r.studentID?.toUpperCase()];
+    const name = r.studentName || info?.name || "Unknown";
 
-    const status       = r.timeIn && !r.timeOut ? "inside" : "outside";
-    const checkInTime  = r.timeOut || r.timeIn  || "—";
-    const name         = r.studentName || info?.name || "Unknown";
+    const isViolation = r.alarm?.type === "unauthorized_exit";
+    const hasTimeOut  = !!r.timeOut;
 
-    if (r.alarm?.type === "unauthorized_exit") violationCount++;
+    // ── Status logic ──────────────────────────────────────────────────────
+    // - timeOut exists              → outside
+    // - unauthorized_exit alarm     → violation (physically left without scanning)
+    // - only timeIn, no alarm       → inside
+    let status = "outside";
+    if (!hasTimeOut) {
+      status = isViolation ? "violation" : "inside";
+    }
+
+    if (isViolation) violationCount++;
 
     return {
-      id: r.studentID,
+      firebaseKey:    r.firebaseKey,
+      id:             r.studentID,
       name,
-      class:       info?.course || "—",
-      checkInTime,
+      class:          info?.course || "—",
+      checkInTime:    r.timeOut || r.timeIn || "—",
       status,
+      authorizedExit: r.authorizedExit ?? true,
     };
   });
 
   return {
     present:    rows.filter((r) => r.status === "inside").length,
-    outside:    rows.filter((r) => r.status === "outside").length,
+    outside:    rows.filter((r) => r.status === "outside" || r.status === "violation").length,
     violations: violationCount,
     students:   rows,
   };
 }
 
+// ─── Dashboard Stats (one-time fetch) ────────────────────────────────────────
 
 export async function getDashboardStats(date = todayStr()) {
   const [students, campusLogs, attendance] = await Promise.all([
@@ -292,7 +303,9 @@ export async function getDashboardStats(date = todayStr()) {
   });
 
   const onCampus   = [...entrySet].filter((id) => !exitSet.has(id)).length;
-  const inClass    = attendance.filter((r) => r.timeIn && !r.timeOut).length;
+  const inClass = attendance.filter(
+  (r) => r.timeIn && !r.timeOut && r.alarm?.type !== "unauthorized_exit"
+  ).length;
   const violations = attendance.filter((r) => r.alarm?.type === "unauthorized_exit").length;
 
   return {
